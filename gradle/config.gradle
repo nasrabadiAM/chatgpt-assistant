@@ -1,0 +1,6 @@
+ext {
+    applicationId = "com.nasrabadiam.chatgptassistant"
+    minSdk = 21
+    compileSdk = 33
+    targetSdk = 33
+}

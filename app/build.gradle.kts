@@ -4,13 +4,14 @@ plugins {
 }
 
 android {
-    namespace = "com.nasrabadiam.chatgptassistant"
-    compileSdk = 33
+    val appId = extra.get("applicationId") as String
+    namespace = appId
+    compileSdk = extra.get("compileSdk") as Int
 
     defaultConfig {
-        applicationId = "com.nasrabadiam.chatgptassistant"
-        minSdk = 21
-        targetSdk = 33
+        applicationId = appId
+        minSdk = extra.get("minSdk") as Int
+        targetSdk = extra.get("targetSdk") as Int
         versionCode = 1
         versionName = "1.0"
 
