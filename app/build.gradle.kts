@@ -4,14 +4,14 @@ plugins {
 }
 
 android {
-    val appId = extra.get("applicationId") as String
+    val appId = extra.getString("applicationId")
     namespace = appId
-    compileSdk = extra.get("compileSdk") as Int
+    compileSdk = extra.getInt("compileSdk")
 
     defaultConfig {
         applicationId = appId
-        minSdk = extra.get("minSdk") as Int
-        targetSdk = extra.get("targetSdk") as Int
+        minSdk = extra.getInt("minSdk")
+        targetSdk = extra.getInt("targetSdk")
         versionCode = 1
         versionName = "1.0"
 

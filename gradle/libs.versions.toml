@@ -112,6 +112,7 @@ room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "
 
 # Dependencies of the included build-logic
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "androidGradlePlugin" }
+android-gradleApi = { group = "com.android.tools.build", name = "gradle-api", version.ref = "androidGradlePlugin" }
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 detekt-formattingPlugin = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt" }
 
