@@ -13,4 +13,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "ChatGpt Assistant"
-include(":androidApp")
+include(":androidApp", ":shared")
