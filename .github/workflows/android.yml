@@ -2,10 +2,11 @@ name: Android CI
 
 on:
   pull_request:
+    branches:
+      - main
     types:
       - opened
-  push:
-    branches: [ $default-branch ]
+      - synchronize
 
 jobs:
   detekt: 
@@ -20,7 +21,10 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
         cache: gradle
-
+    - name: Gradle version setup
+      uses: gradle/gradle-build-action@v1
+      with:
+        gradle-version: '7.5'
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
     - name: Build with Gradle

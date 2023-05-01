@@ -6,11 +6,10 @@ pluginManagement {
     }
 }
 dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         google()
         mavenCentral()
     }
 }
-rootProject.name = "ChatGpt Assistant"
-include(":app")
+rootProject.name = "ChatGptAssistant"
+include(":androidApp", ":shared")
