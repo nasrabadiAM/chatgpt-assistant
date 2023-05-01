@@ -12,5 +12,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "ChatGpt Assistant"
+rootProject.name = "ChatGptAssistant"
 include(":androidApp", ":shared")
