@@ -2,10 +2,11 @@ name: Android CI
 
 on:
   pull_request:
+    branches:
+      - main
     types:
       - opened
-  push:
-    branches: [ $default-branch ]
+      - synchronize
 
 jobs:
   detekt: 
