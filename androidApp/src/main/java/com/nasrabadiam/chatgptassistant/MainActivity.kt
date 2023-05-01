@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.nasrabadiam.chatgptassistant.ui.theme.ChatGptAssistantTheme
+import com.nasrabadiam.shared.Greeting
 
 class MainActivity : ComponentActivity() {
 
@@ -23,9 +24,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val name = "Flamingo"
-                    Greeting(name)
-                    Greeting(name)
+                    Greeting(Greeting().greet())
                 }
             }
         }
