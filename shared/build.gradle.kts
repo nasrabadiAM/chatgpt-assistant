@@ -31,17 +31,40 @@ kotlin {
     }
 
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies {
+                implementation(libs.openai)
+                implementation(kotlin("stdlib-common"))
+                implementation(libs.kotlinx.coroutines.core)
+            }
+        }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
+                implementation(libs.kotlinx.coroutines.test)
             }
         }
-        val androidMain by getting
+        val androidMain by getting {
+            dependencies {
+                implementation(libs.ktor.client.okhttp)
+            }
+        }
         val androidUnitTest by getting
-        val iosX64Main by getting
-        val iosArm64Main by getting
-        val iosSimulatorArm64Main by getting
+        val iosX64Main by getting {
+            dependencies {
+                implementation(libs.ktor.client.darwin)
+            }
+        }
+        val iosArm64Main by getting {
+            dependencies {
+                implementation(libs.ktor.client.darwin)
+            }
+        }
+        val iosSimulatorArm64Main by getting {
+            dependencies {
+                implementation(libs.ktor.client.darwin)
+            }
+        }
         val iosMain by creating {
             dependsOn(commonMain)
             iosX64Main.dependsOn(this)
