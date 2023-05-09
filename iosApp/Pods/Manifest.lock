@@ -1,0 +1,16 @@
+PODS:
+  - androidApp (1.0.0)
+
+DEPENDENCIES:
+  - androidApp (from `../androidApp`)
+
+EXTERNAL SOURCES:
+  androidApp:
+    :path: "../androidApp"
+
+SPEC CHECKSUMS:
+  androidApp: 92ffd381cca8edf95e9637b6265e20b0d24a61b4
+
+PODFILE CHECKSUM: 01bd622173736f3620ef075cf1fa1b5b45f91133
+
+COCOAPODS: 1.12.1
