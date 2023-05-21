@@ -1,16 +1,16 @@
 PODS:
-  - androidApp (1.0.0)
+  - shared (1.12.1)
 
 DEPENDENCIES:
-  - androidApp (from `../androidApp`)
+  - shared (from `../shared`)
 
 EXTERNAL SOURCES:
-  androidApp:
-    :path: "../androidApp"
+  shared:
+    :path: "../shared"
 
 SPEC CHECKSUMS:
-  androidApp: 92ffd381cca8edf95e9637b6265e20b0d24a61b4
+  shared: 8d4a1f069de36a39a47933b9b887f28bda917753
 
-PODFILE CHECKSUM: 01bd622173736f3620ef075cf1fa1b5b45f91133
+PODFILE CHECKSUM: f282da88f39e69507b0a255187c8a6b644477756
 
 COCOAPODS: 1.12.1

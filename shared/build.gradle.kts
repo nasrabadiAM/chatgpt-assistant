@@ -1,25 +1,28 @@
 plugins {
     kotlin("multiplatform")
+    kotlin("native.cocoapods")
     id("com.android.library")
-    kotlin("plugin.serialization")
+    id("org.jetbrains.compose")
 }
 
 kotlin {
-    android {
-        compilations.all {
-            kotlinOptions {
-                jvmTarget = "1.8"
-            }
-        }
-    }
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach {
-        it.binaries.framework {
+    android()
+
+    ios()
+    iosSimulatorArm64()
+
+
+    cocoapods {
+        summary = "Shared code for the chat gpt app"
+        ios.deploymentTarget = "14.1"
+        homepage = "https://github.com/nasrabadiAM/chatgpt-assistant"
+        version = "1.12.1"
+        podfile = project.file("../iosApp/Podfile")
+        framework {
             baseName = "shared"
+            isStatic = true
         }
+        extraSpecAttributes["resources"] = "['src/commonMain/resources/**', 'src/iosMain/resources/**']"
     }
 
     sourceSets {
@@ -35,6 +38,13 @@ kotlin {
          */
         val commonMain by getting {
             dependencies {
+                // Compose
+                implementation(compose.ui)
+                implementation(compose.foundation)
+                implementation(compose.material)
+                @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
+                implementation(compose.components.resources)
+
                 implementation(libs.openai)
                 implementation(kotlin("stdlib-common"))
                 // Network
@@ -66,31 +76,17 @@ kotlin {
             dependencies {
                 // Network
                 implementation(libs.ktor.client.okhttp)
+
+                api(libs.activity.compose)
+                api(libs.androidx.appcompat)
+                api(libs.androidx.core)
             }
         }
         val androidUnitTest by getting
 
-        val iosX64Main by getting
-        val iosArm64Main by getting
-        val iosSimulatorArm64Main by getting
-        val iosMain by creating {
-            dependsOn(commonMain)
-            iosX64Main.dependsOn(this)
-            iosArm64Main.dependsOn(this)
-            iosSimulatorArm64Main.dependsOn(this)
-            dependencies {
-                // Network
-                implementation(libs.ktor.client.ios)
-            }
-        }
-        val iosX64Test by getting
-        val iosArm64Test by getting
-        val iosSimulatorArm64Test by getting
-        val iosTest by creating {
-            dependsOn(commonTest)
-            iosX64Test.dependsOn(this)
-            iosArm64Test.dependsOn(this)
-            iosSimulatorArm64Test.dependsOn(this)
+        val iosMain by getting
+        val iosSimulatorArm64Main by getting {
+            dependsOn(iosMain)
         }
     }
 }
@@ -104,7 +100,7 @@ android {
         minSdk = extra.get("minSdk") as Int
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 }
