@@ -2,14 +2,12 @@ package com.nasrabadiam.shared
 
 import com.nasrabadiam.shared.chat.data.ChatRepository
 import com.nasrabadiam.shared.doubles.FakeAiDataSource
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 
-@OptIn(ExperimentalCoroutinesApi::class)
 class ChatRepositoryTest {
 
     private val chatRepo = ChatRepository(FakeAiDataSource())
