@@ -19,6 +19,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.nasrabadiam.shared.BuildConfig
 import com.nasrabadiam.shared.chat.ChatPresenter
 import com.nasrabadiam.shared.chat.Message
 import com.nasrabadiam.shared.chat.data.ChatRepository
@@ -26,7 +27,7 @@ import com.nasrabadiam.shared.chat.data.ChatRepository
 @Composable
 fun AssistantApp() {
     val chatPresenter = remember {
-        ChatPresenter(ChatRepository.getInstance("open ai token"))
+        ChatPresenter(ChatRepository.getInstance(BuildConfig.API_KEY))
     }
 
     Chat(

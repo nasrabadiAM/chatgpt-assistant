@@ -3,8 +3,14 @@ plugins {
     kotlin("native.cocoapods")
     id("com.android.library")
     id("org.jetbrains.compose")
+    id("com.github.gmazzo.buildconfig") version "4.0.4"
 }
 
+buildConfig {
+    className("BuildConfig")   // forces the class name. Defaults to 'BuildConfig'
+    packageName("com.nasrabadiam.shared")
+    buildConfigField("String", "API_KEY", "\"${extra.get("apiKey")}\"")
+}
 kotlin {
     android()
 
