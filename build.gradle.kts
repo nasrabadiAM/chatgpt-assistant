@@ -15,11 +15,14 @@ allprojects {
 
     apply { from(file("$rootDir/gradle/config.gradle")) }
 
-    val properties = java.util.Properties().apply {
-        load(rootProject.file("local.properties").reader())
-    }
-    extra.apply {
-        set("apiKey", properties["chatGptApiKey"])
+    val localPropertiesFile = rootProject.file("local.properties")
+    if (localPropertiesFile.exists()) {
+        val properties = java.util.Properties().apply {
+            load(localPropertiesFile.reader())
+        }
+        extra.apply {
+            set("apiKey", properties["chatGptApiKey"])
+        }
     }
 }
 
