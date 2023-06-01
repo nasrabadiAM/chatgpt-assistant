@@ -14,6 +14,13 @@ allprojects {
     apply(plugin = "com.github.ben-manes.versions")
 
     apply { from(file("$rootDir/gradle/config.gradle")) }
+
+    val properties = java.util.Properties().apply {
+        load(rootProject.file("local.properties").reader())
+    }
+    extra.apply {
+        set("apiKey", properties["chatGptApiKey"])
+    }
 }
 
 tasks.register<Detekt>("detektAll") {
