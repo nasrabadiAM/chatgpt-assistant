@@ -9,8 +9,14 @@ plugins {
 buildConfig {
     className("BuildConfig")   // forces the class name. Defaults to 'BuildConfig'
     packageName("com.nasrabadiam.shared")
-    buildConfigField("String", "API_KEY", "\"${extra.get("apiKey")}\"")
+    val apiKey = if (extra.has("apiKey")) {
+        extra.get("apiKey")
+    } else {
+        "not-provided"
+    }
+    buildConfigField("String", "API_KEY", "\"$apiKey\"")
 }
+
 kotlin {
     android()
 
