@@ -24,10 +24,11 @@ class ChatPresenter(
 
     fun askQuestion(question: String) {
         presenterScope.launch {
-            _answersList.add(Message(chatMessageIdCounter++, question))
+            val trimmedQuestion = question.trimEnd()
+            _answersList.add(Message(chatMessageIdCounter++, trimmedQuestion))
             val answerCounter = chatMessageIdCounter++
             var answer = ""
-            chatRepository.askQuestionFlow(question).collect {
+            chatRepository.askQuestionFlow(trimmedQuestion).collect {
                 answer += it
                 val itemIndex = _answersList.indexOfLast { item -> item.id == answerCounter }
                 if (itemIndex >= 0) {
