@@ -90,7 +90,11 @@ kotlin {
         }
         val androidUnitTest by getting
 
-        val iosMain by getting
+        val iosMain by getting {
+            dependencies {
+                implementation(libs.ktor.client.ios)
+            }
+        }
         val iosSimulatorArm64Main by getting {
             dependsOn(iosMain)
         }
