@@ -56,7 +56,7 @@ complexity:
   LongMethod:
     active: true
     threshold: 50
-    ignoreAnnotated: [ 'Composable' ]
+    ignoreAnnotated: [ 'Composable', 'Test' ]
   LongParameterList:
     active: true
     functionThreshold: 8
@@ -306,6 +306,7 @@ naming:
   FunctionMaxLength:
     active: true
     excludes: [ "**/test/**","**/androidTest/**","**/*.Test.kt","**/*.Spec.kt","**/*.Spek.kt" ]
+    ignoreAnnotated: [ 'Test' ]
     maximumFunctionNameLength: 50
   FunctionMinLength:
     active: true
@@ -317,7 +318,7 @@ naming:
     functionPattern: '^([a-z$][a-zA-Z$0-9]*)|(`.*`)$'
     excludeClassPattern: '$^'
     ignoreOverridden: false
-    ignoreAnnotated: [ 'Composable' ]
+    ignoreAnnotated: [ 'Composable' , 'Test' ]
   FunctionParameterNaming:
     active: true
     excludes: [ "**/test/**","**/androidTest/**","**/*.Test.kt","**/*.Spec.kt","**/*.Spek.kt" ]

@@ -14,6 +14,8 @@ With this app, you can send and receive messages using the Chat GPT API by provi
 2. Open the project in Android Studio.
 3. Build and run the app on your device or emulator.
 
+Note: you should provide your api key to chat.
+
 ## Features
 
 - Send and receive messages using the Chat GPT API.

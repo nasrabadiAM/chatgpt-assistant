@@ -1,12 +1,29 @@
 import io.gitlab.arturbosch.detekt.Detekt
 
 plugins {
-    alias(libs.plugins.android.application) apply false
-    alias(libs.plugins.android.library) apply false
-    alias(libs.plugins.kotlin.jvm) apply false
-    alias(libs.plugins.kotlin.serialization) apply false
-    alias(libs.plugins.hilt) apply false
-    alias(libs.plugins.detekt)
+    id("com.github.ben-manes.versions").apply(false)
+    kotlin("multiplatform").apply(false)
+    id("com.android.application").apply(false)
+    id("com.android.library").apply(false)
+    id("io.gitlab.arturbosch.detekt")
+}
+
+allprojects {
+    // ./gradlew dependencyUpdates
+    // Report: build/dependencyUpdates/report.txt
+    apply(plugin = "com.github.ben-manes.versions")
+
+    apply { from(file("$rootDir/gradle/config.gradle")) }
+
+    val localPropertiesFile = rootProject.file("local.properties")
+    if (localPropertiesFile.exists()) {
+        val properties = java.util.Properties().apply {
+            load(localPropertiesFile.reader())
+        }
+        extra.apply {
+            set("apiKey", properties["chatGptApiKey"])
+        }
+    }
 }
 
 tasks.register<Detekt>("detektAll") {
@@ -22,12 +39,8 @@ tasks.register<Detekt>("detektAll") {
             outputLocation.set(file("build/reports/detekt.html"))
         }
     }
-    include("**/*.kt", "**/*.kts")
-    exclude("resources/", "build/")
-}
-
-allprojects {
-    apply { from(file("$rootDir/gradle/config.gradle")) }
+    include("**/*.kt")
+    exclude("resources/", "**/build/**")
 }
 
 dependencies {
