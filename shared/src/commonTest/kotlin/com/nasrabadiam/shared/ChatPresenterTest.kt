@@ -8,6 +8,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
+@OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
 class ChatPresenterTest {
 
     private val chatPresenter = ChatPresenter(FakeChatRepository(), UnconfinedTestDispatcher())
