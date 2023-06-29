@@ -8,6 +8,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -22,15 +23,13 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.platform.LocalWindowInfo
 import com.nasrabadiam.shared.BuildConfig
 import com.nasrabadiam.shared.chat.ChatPresenter
 import com.nasrabadiam.shared.chat.Message
@@ -50,7 +49,6 @@ fun AssistantApp(
     }
 
     ChatGptTheme {
-        LocalWindowInfo
         Chat(
             modifier = modifier,
             askQuestionCallback = chatPresenter::askQuestion,
@@ -68,7 +66,7 @@ private fun Chat(
     onExit: () -> Unit,
     chatHistory: () -> List<Message>
 ) {
-    var textInput by rememberSaveable { mutableStateOf("") }
+    val textInput = rememberSaveable { mutableStateOf("") }
 
     Column(modifier = modifier
         .background(MaterialTheme.colorScheme.transparent)
@@ -113,33 +111,51 @@ private fun Chat(
                 TextField(
                     modifier = Modifier.weight(1f),
                     placeholder = { Text("Ask your question...") },
-                    value = textInput,
+                    value = textInput.value,
                     maxLines = 5,
                     onValueChange = {
-                        textInput = it
+                        textInput.value = it
                     },
                     colors = TextFieldDefaults.textFieldColors(
-                        containerColor = MaterialTheme.colorScheme.transparent,
+                        containerColor = MaterialTheme.colorScheme.primaryContainer,
                         focusedIndicatorColor = MaterialTheme.colorScheme.transparent,
-                        unfocusedIndicatorColor = MaterialTheme.colorScheme.transparent,
-                        disabledIndicatorColor = MaterialTheme.colorScheme.transparent
-                    )
+                        unfocusedIndicatorColor = MaterialTheme.colorScheme.transparent
+                    ),
+                    shape = MaterialTheme.shapes.medium,
+                    trailingIcon = {
+                        SendIcon(
+                            textInput = textInput,
+                            askQuestionCallback = askQuestionCallback
+                        )
+                    }
                 )
-                AnimatedVisibility(textInput.isNotEmpty(), enter = fadeIn(), exit = fadeOut()) {
-                    Icon(
-                        imageVector = Icons.Rounded.Send,
-                        modifier = Modifier
-                            .clip(CircleShape)
-                            .clickable {
-                                askQuestionCallback.invoke(textInput)
-                                textInput = ""
-                            }
-                            .padding(MaterialTheme.space.small),
-                        contentDescription = "Send",
-                        tint = MaterialTheme.colorScheme.onBackground
-                    )
-                }
             }
         }
+    }
+}
+
+@Composable
+private fun RowScope.SendIcon(
+    modifier: Modifier = Modifier,
+    textInput: MutableState<String>,
+    askQuestionCallback: (question: String) -> Unit
+) {
+    AnimatedVisibility(
+        textInput.value.isNotEmpty(),
+        enter = fadeIn(),
+        exit = fadeOut()
+    ) {
+        Icon(
+            imageVector = Icons.Rounded.Send,
+            modifier = modifier
+                .clip(CircleShape)
+                .clickable {
+                    askQuestionCallback.invoke(textInput.value)
+                    textInput.value = ""
+                }
+                .padding(MaterialTheme.space.small),
+            contentDescription = "Send",
+            tint = MaterialTheme.colorScheme.onBackground
+        )
     }
 }
