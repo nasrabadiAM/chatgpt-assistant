@@ -40,3 +40,6 @@ android {
         compose = true
     }
 }
+dependencies {
+    implementation(libs.compose.foundation)
+}

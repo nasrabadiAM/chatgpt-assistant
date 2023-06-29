@@ -36,6 +36,7 @@ dependencyResolutionManagement {
         create("libs") {
             // Compose
             library("androidx-compose-ui-tooling", "androidx.compose.ui:ui-tooling:1.5.0-alpha04")
+            library("compose-foundation", "androidx.compose.foundation:foundation:1.4.3")
             library("activity-compose", "androidx.activity:activity-compose:1.7.1")
             library("compose-libres", "io.github.skeptick.libres:libres-compose:1.1.8")
             library("compose-image-loader", "io.github.qdsfdhvh:image-loader:1.4.2")

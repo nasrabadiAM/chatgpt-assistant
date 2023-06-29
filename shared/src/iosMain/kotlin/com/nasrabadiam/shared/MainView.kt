@@ -4,6 +4,6 @@ import androidx.compose.ui.window.ComposeUIViewController
 import com.nasrabadiam.shared.chat.ui.AssistantApp
 import platform.UIKit.UIViewController
 
-fun MainView(): UIViewController = ComposeUIViewController {
-    AssistantApp()
+fun MainView(onExit: () -> Unit): UIViewController = ComposeUIViewController {
+    AssistantApp(onExit = onExit)
 }
