@@ -30,7 +30,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalWindowInfo
 import com.nasrabadiam.shared.BuildConfig
 import com.nasrabadiam.shared.chat.ChatPresenter
@@ -39,6 +38,7 @@ import com.nasrabadiam.shared.chat.data.ChatRepository
 import com.nasrabadiam.shared.chat.ui.designsystem.theme.BottomSheetShape
 import com.nasrabadiam.shared.chat.ui.designsystem.theme.ChatGptTheme
 import com.nasrabadiam.shared.chat.ui.designsystem.theme.space
+import com.nasrabadiam.shared.chat.ui.designsystem.theme.transparent
 
 @Composable
 fun AssistantApp(
@@ -71,7 +71,7 @@ private fun Chat(
     var textInput by rememberSaveable { mutableStateOf("") }
 
     Column(modifier = modifier
-        .background(Color.Transparent)
+        .background(MaterialTheme.colorScheme.transparent)
         .clickable { onExit.invoke() }
     ) {
         Box(Modifier.weight(1f))
@@ -119,10 +119,10 @@ private fun Chat(
                         textInput = it
                     },
                     colors = TextFieldDefaults.textFieldColors(
-                        containerColor = Color.Transparent,
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent,
-                        disabledIndicatorColor = Color.Transparent
+                        containerColor = MaterialTheme.colorScheme.transparent,
+                        focusedIndicatorColor = MaterialTheme.colorScheme.transparent,
+                        unfocusedIndicatorColor = MaterialTheme.colorScheme.transparent,
+                        disabledIndicatorColor = MaterialTheme.colorScheme.transparent
                     )
                 )
                 AnimatedVisibility(textInput.isNotEmpty(), enter = fadeIn(), exit = fadeOut()) {
@@ -136,7 +136,7 @@ private fun Chat(
                             }
                             .padding(MaterialTheme.space.small),
                         contentDescription = "Send",
-                        tint = Color.Black
+                        tint = MaterialTheme.colorScheme.onBackground
                     )
                 }
             }

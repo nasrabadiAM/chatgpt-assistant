@@ -1,6 +1,7 @@
 package com.nasrabadiam.shared.chat.ui.designsystem.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
@@ -69,6 +70,10 @@ val DarkDefaultColorScheme = darkColorScheme(
     inverseOnSurface = DarkPurpleGray10,
     outline = PurpleGray60,
 )
+
+val ColorScheme.transparent: Color
+    @Composable
+    get() = Color.Transparent
 
 @Composable
 fun ChatGptTheme(
