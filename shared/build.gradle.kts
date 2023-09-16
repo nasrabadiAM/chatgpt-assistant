@@ -26,7 +26,7 @@ kotlin {
 
     cocoapods {
         summary = "Shared code for the chat gpt app"
-        ios.deploymentTarget = "14.1"
+        ios.deploymentTarget = "15.2"
         homepage = "https://github.com/nasrabadiAM/chatgpt-assistant"
         version = "1.12.1"
         podfile = project.file("../iosApp/Podfile")
