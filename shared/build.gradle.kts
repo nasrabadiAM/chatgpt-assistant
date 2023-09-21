@@ -77,6 +77,9 @@ kotlin {
                 implementation(libs.xml.serialization)
                 // strings
                 implementation(project(":resources:strings"))
+
+                // Logger
+                implementation(libs.napier)
             }
         }
         val commonTest by getting {
