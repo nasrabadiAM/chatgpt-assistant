@@ -37,6 +37,7 @@ import com.nasrabadiam.shared.designsystem.space
 import com.nasrabadiam.shared.designsystem.theme.ChatGptAssistantTheme
 import com.nasrabadiam.shared.designsystem.theme.Typography
 import com.nasrabadiam.shared.designsystem.theme.transparent
+import com.nasrabadiam.strings.appStrings
 
 @Composable
 fun AssistantHome() {
@@ -91,7 +92,7 @@ private fun Chat(
         ) {
             TextField(
                 modifier = Modifier.weight(1f),
-                placeholder = { Text("Ask your question...") },
+                placeholder = { Text(appStrings.askYourQuestion) },
                 value = textInput,
                 maxLines = 5,
                 textStyle = Typography.labelMedium,
@@ -114,7 +115,7 @@ private fun Chat(
                         askQuestionCallback.invoke(textInput)
                         textInput = ""
                     }.padding(MaterialTheme.space.medium),
-                    contentDescription = "Send",
+                    contentDescription = appStrings.contentDescription.send,
                     tint = MaterialTheme.colorScheme.onBackground
                 )
             }

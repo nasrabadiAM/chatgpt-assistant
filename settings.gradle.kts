@@ -21,8 +21,8 @@ pluginManagement {
 
         id("com.github.ben-manes.versions").version("0.46.0")
         id("org.jetbrains.compose").version("1.5.0-dev1049")
-        id("io.github.skeptick.libres").version("1.1.5")
         id("io.gitlab.arturbosch.detekt").version("1.22.0")
+        id("com.google.devtools.ksp").version("1.9.10-1.0.13")
     }
 }
 
@@ -37,7 +37,6 @@ dependencyResolutionManagement {
             // Compose
             library("androidx-compose-ui-tooling", "androidx.compose.ui:ui-tooling:1.5.0-alpha04")
             library("activity-compose", "androidx.activity:activity-compose:1.7.1")
-            library("compose-libres", "io.github.skeptick.libres:libres-compose:1.1.8")
             library("compose-image-loader", "io.github.qdsfdhvh:image-loader:1.4.2")
             library("voyager-navigator", "ca.gosyer:voyager-navigator:1.0.0-rc06")
 
@@ -92,6 +91,10 @@ dependencyResolutionManagement {
 
             // openai
             library("openai", "com.aallam.openai:openai-client:3.2.2")
+
+            // lyricist
+            library("lyricist","cafe.adriel.lyricist:lyricist:1.4.2")
+
         }
     }
 }

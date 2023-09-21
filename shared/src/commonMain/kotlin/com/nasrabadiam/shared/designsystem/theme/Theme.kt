@@ -5,6 +5,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import com.nasrabadiam.strings.ProvideStrings
 
 private val LightColors = lightColorScheme(
     primary = md_theme_light_primary,
@@ -81,8 +82,10 @@ fun ChatGptAssistantTheme(
         DarkColors
     }
 
-    MaterialTheme(
-        colorScheme = colors,
-        content = content
-    )
+    ProvideStrings {
+        MaterialTheme(
+            colorScheme = colors,
+            content = content
+        )
+    }
 }
