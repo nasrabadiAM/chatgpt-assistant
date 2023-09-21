@@ -5,7 +5,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import com.nasrabadiam.strings.ProvideStrings
+import com.nasrabadiam.shared.Locale
+import com.nasrabadiam.shared.getLocale
+import com.nasrabadiam.strings.ProvideLocale
+import com.nasrabadiam.strings.rememberLocale
 
 private val LightColors = lightColorScheme(
     primary = md_theme_light_primary,
@@ -72,7 +75,8 @@ private val DarkColors = darkColorScheme(
 )
 
 @Composable
-fun ChatGptAssistantTheme(
+fun AssistantLocaleTheme(
+    currentLocale: Locale = getLocale(),
     useDarkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
@@ -82,7 +86,10 @@ fun ChatGptAssistantTheme(
         DarkColors
     }
 
-    ProvideStrings {
+    val currentLanguage = rememberLocale(currentLocale).apply {
+        languageTag = currentLocale
+    }
+    ProvideLocale(currentLanguage) {
         MaterialTheme(
             colorScheme = colors,
             content = content

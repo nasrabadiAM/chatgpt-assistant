@@ -34,9 +34,10 @@ import com.nasrabadiam.shared.chat.ChatPresenter
 import com.nasrabadiam.shared.chat.Message
 import com.nasrabadiam.shared.chat.data.ChatRepository
 import com.nasrabadiam.shared.designsystem.space
-import com.nasrabadiam.shared.designsystem.theme.ChatGptAssistantTheme
+import com.nasrabadiam.shared.designsystem.theme.AssistantLocaleTheme
 import com.nasrabadiam.shared.designsystem.theme.Typography
 import com.nasrabadiam.shared.designsystem.theme.transparent
+import com.nasrabadiam.shared.utils.localeAware
 import com.nasrabadiam.strings.appStrings
 
 @Composable
@@ -44,8 +45,7 @@ fun AssistantHome() {
     val chatPresenter = remember {
         ChatPresenter(ChatRepository.getInstance(BuildConfig.API_KEY))
     }
-
-    ChatGptAssistantTheme {
+    AssistantLocaleTheme {
         Chat(
             askQuestionCallback = chatPresenter::askQuestion,
             chatHistory = { chatPresenter.answersList }
@@ -111,10 +111,14 @@ private fun Chat(
             AnimatedVisibility(textInput.isNotEmpty(), enter = fadeIn(), exit = fadeOut()) {
                 Icon(
                     imageVector = Icons.Rounded.Send,
-                    modifier = Modifier.clip(CircleShape).clickable {
-                        askQuestionCallback.invoke(textInput)
-                        textInput = ""
-                    }.padding(MaterialTheme.space.medium),
+                    modifier = Modifier
+                        .clip(CircleShape)
+                        .clickable {
+                            askQuestionCallback.invoke(textInput)
+                            textInput = ""
+                        }
+                        .padding(MaterialTheme.space.medium)
+                        .localeAware(),
                     contentDescription = appStrings.contentDescription.send,
                     tint = MaterialTheme.colorScheme.onBackground
                 )

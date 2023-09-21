@@ -93,8 +93,7 @@ dependencyResolutionManagement {
             library("openai", "com.aallam.openai:openai-client:3.2.2")
 
             // lyricist
-            library("lyricist","cafe.adriel.lyricist:lyricist:1.4.2")
-
+            library("lyricist", "cafe.adriel.lyricist:lyricist:1.4.2")
         }
     }
 }
