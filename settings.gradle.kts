@@ -15,7 +15,7 @@ pluginManagement {
         kotlin("plugin.serialization").version(kotlin)
         kotlin("native.cocoapods").version(kotlin)
 
-        val agp = "8.0.1"
+        val agp = "8.1.1"
         id("com.android.application").version(agp)
         id("com.android.library").version(agp)
 
