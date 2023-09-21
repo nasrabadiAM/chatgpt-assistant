@@ -95,3 +95,5 @@ dependencyResolutionManagement {
         }
     }
 }
+
+include(":resources:strings")

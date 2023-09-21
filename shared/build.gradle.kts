@@ -75,6 +75,8 @@ kotlin {
                 // Datetime
                 implementation(libs.kotlinx.datetime)
                 implementation(libs.xml.serialization)
+                // strings
+                implementation(project(":resources:strings"))
             }
         }
         val commonTest by getting {
