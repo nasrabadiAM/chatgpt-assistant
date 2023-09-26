@@ -29,10 +29,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import com.nasrabadiam.shared.BuildConfig
-import com.nasrabadiam.shared.chat.ChatPresenter
 import com.nasrabadiam.shared.chat.Message
-import com.nasrabadiam.shared.chat.data.ChatRepository
 import com.nasrabadiam.shared.designsystem.space
 import com.nasrabadiam.shared.designsystem.theme.AssistantLocaleTheme
 import com.nasrabadiam.shared.designsystem.theme.Typography
@@ -41,9 +38,9 @@ import com.nasrabadiam.shared.utils.localeAware
 import com.nasrabadiam.strings.appStrings
 
 @Composable
-fun AssistantHome() {
+fun AssistantHome(component: HomeComponent) {
     val chatPresenter = remember {
-        ChatPresenter(ChatRepository.getInstance(BuildConfig.API_KEY))
+        component.presenter
     }
     AssistantLocaleTheme {
         Chat(

@@ -33,6 +33,8 @@ kotlin {
         framework {
             baseName = "shared"
             isStatic = true
+            export(libs.decompose)
+            export(libs.decompose.lifecycle)
         }
         extraSpecAttributes["resources"] = "['src/commonMain/resources/**', 'src/iosMain/resources/**']"
     }
@@ -77,9 +79,12 @@ kotlin {
                 implementation(libs.xml.serialization)
                 // strings
                 implementation(project(":resources:strings"))
-
                 // Logger
                 implementation(libs.napier)
+                // decompose
+                api(libs.decompose)
+                implementation(libs.decompose.extensions)
+                api(libs.decompose.lifecycle)
             }
         }
         val commonTest by getting {

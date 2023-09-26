@@ -2,8 +2,8 @@ package com.nasrabadiam.shared
 
 import androidx.compose.ui.window.ComposeUIViewController
 import com.nasrabadiam.shared.chat.ui.AssistantHome
-import platform.UIKit.UIViewController
+import com.nasrabadiam.shared.chat.ui.HomeComponent
 
-fun MainView(): UIViewController = ComposeUIViewController {
-    AssistantHome()
+fun MainView(component: HomeComponent) = ComposeUIViewController {
+    AssistantHome(component)
 }

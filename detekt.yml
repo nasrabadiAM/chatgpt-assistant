@@ -357,7 +357,7 @@ naming:
   VariableMinLength:
     active: true
     excludes: [ "**/test/**","**/androidTest/**","**/*.Test.kt","**/*.Spec.kt","**/*.Spek.kt" ]
-    minimumVariableNameLength: 3
+    minimumVariableNameLength: 2
   VariableNaming:
     active: true
     excludes: [ "**/test/**","**/androidTest/**","**/*.Test.kt","**/*.Spec.kt","**/*.Spek.kt" ]

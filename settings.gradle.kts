@@ -94,6 +94,12 @@ dependencyResolutionManagement {
 
             // lyricist
             library("lyricist", "cafe.adriel.lyricist:lyricist:1.4.2")
+
+            // decompose
+            val decompose = "2.1.0-compose-experimental-beta-01"
+            library("decompose","com.arkivanov.decompose:decompose:$decompose")
+            library("decompose-extensions","com.arkivanov.decompose:extensions-compose-jetbrains:$decompose")
+            library("decompose-lifecycle","com.arkivanov.essenty:lifecycle:1.2.0")
         }
     }
 }

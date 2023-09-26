@@ -2,20 +2,22 @@ package com.nasrabadiam.shared.chat
 
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
+import com.arkivanov.essenty.instancekeeper.InstanceKeeper
+import com.arkivanov.essenty.lifecycle.Lifecycle
+import com.nasrabadiam.shared.DispatcherProvider
 import com.nasrabadiam.shared.chat.data.Chat
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.IO
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
 class ChatPresenter(
+    lifecycle: Lifecycle,
     private val chatRepository: Chat,
-    ioDispatcher: CoroutineDispatcher = Dispatchers.IO
-) {
+    private val dispatcherProvider: DispatcherProvider,
+) : InstanceKeeper.Instance {
 
-    private val presenterScope = CoroutineScope(ioDispatcher + Job())
+    private val presenterScope = CoroutineScope(SupervisorJob() + dispatcherProvider.main)
 
     private val _answersList = mutableStateListOf<Message>()
     val answersList: SnapshotStateList<Message> = _answersList
@@ -23,7 +25,7 @@ class ChatPresenter(
     private var chatMessageIdCounter = 0
 
     fun askQuestion(question: String) {
-        presenterScope.launch {
+        presenterScope.launch(dispatcherProvider.io) {
             val trimmedQuestion = question.trimEnd()
             _answersList.add(Message(chatMessageIdCounter++, trimmedQuestion))
             val answerCounter = chatMessageIdCounter++
@@ -38,5 +40,9 @@ class ChatPresenter(
                 }
             }
         }
+    }
+
+    override fun onDestroy() {
+        presenterScope.cancel()
     }
 }

@@ -3,9 +3,25 @@ import SwiftUI
 import shared
 
 struct ComposeView: UIViewControllerRepresentable {
-    func makeUIViewController(context: Context) -> UIViewController {
-        MainViewKt.MainView()
-    }
+
+	let lifecyle: LifecycleRegistry = LifecycleRegistryKt.LifecycleRegistry()
+
+	init() {
+		LifecycleRegistryExtKt.create(lifecyle)
+	}
+
+	func makeUIViewController(context: Context) -> UIViewController {
+		let dispatcherProvider = DefaultDispatcherProvider()
+		let component = HomeComponent(
+			componentContext: DefaultComponentContext(lifecycle: lifecyle),
+			chatRepository: ChatRepositoryKt.getInstance(),
+			dispatcherProvider: dispatcherProvider
+		)
+
+		let controller = MainViewKt.MainView(component: component)
+		LifecycleRegistryExtKt.resume(lifecyle)
+		return controller
+	}
 
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
 }
