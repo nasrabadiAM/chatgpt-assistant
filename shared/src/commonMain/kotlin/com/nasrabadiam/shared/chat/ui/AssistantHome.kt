@@ -127,7 +127,6 @@ private fun ChatSection(modifier: Modifier, chatHistory: () -> List<Message>) {
     }
 }
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun InputBar(
