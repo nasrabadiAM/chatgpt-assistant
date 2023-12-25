@@ -1,6 +1,8 @@
 package com.nasrabadiam.shared.chat
 
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import com.arkivanov.essenty.instancekeeper.InstanceKeeper
 import com.arkivanov.essenty.lifecycle.Lifecycle
@@ -9,6 +11,7 @@ import com.nasrabadiam.shared.chat.data.Chat
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
+import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.launch
 
 class ChatPresenter(
@@ -24,13 +27,18 @@ class ChatPresenter(
 
     private var chatMessageIdCounter = 0
 
+    val isGeneratingAnswer: MutableState<Boolean> = mutableStateOf(false)
+
     fun askQuestion(question: String) {
         presenterScope.launch(dispatcherProvider.io) {
+            isGeneratingAnswer.value = true
             val trimmedQuestion = question.trimEnd()
             _answersList.add(Message(chatMessageIdCounter++, trimmedQuestion))
             val answerCounter = chatMessageIdCounter++
             var answer = ""
-            chatRepository.askQuestionFlow(trimmedQuestion).collect {
+            chatRepository.askQuestionFlow(trimmedQuestion).onCompletion {
+                isGeneratingAnswer.value = false
+            }.collect {
                 answer += it
                 val itemIndex = _answersList.indexOfLast { item -> item.id == answerCounter }
                 if (itemIndex >= 0) {
