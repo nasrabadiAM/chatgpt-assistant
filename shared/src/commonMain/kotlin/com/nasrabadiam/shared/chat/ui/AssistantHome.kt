@@ -1,6 +1,8 @@
 package com.nasrabadiam.shared.chat.ui
 
+import androidx.compose.animation.Animatable
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
@@ -9,7 +11,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
@@ -41,6 +42,7 @@ import com.nasrabadiam.shared.chat.Message
 import com.nasrabadiam.shared.designsystem.space
 import com.nasrabadiam.shared.designsystem.theme.AssistantLocaleTheme
 import com.nasrabadiam.shared.designsystem.theme.Typography
+import com.nasrabadiam.shared.designsystem.theme.backgroundSurface
 import com.nasrabadiam.shared.designsystem.theme.transparent
 import com.nasrabadiam.shared.utils.localeAware
 import com.nasrabadiam.strings.appStrings
@@ -58,6 +60,7 @@ fun AssistantHome(
         Chat(
             modifier = modifier,
             askQuestionCallback = chatPresenter::askQuestion,
+            isGenerating = chatPresenter.isGeneratingAnswer.value,
             chatHistory = { chatPresenter.answersList },
             onExitClicked = onExitClicked
         )
@@ -68,38 +71,40 @@ fun AssistantHome(
 private fun Chat(
     modifier: Modifier,
     askQuestionCallback: (question: String) -> Unit,
+    isGenerating: Boolean,
     onExitClicked: () -> Unit,
     chatHistory: () -> List<Message>
 ) {
-    Column(modifier = modifier) {
-        Box(
-            Modifier
+    val initialColor = MaterialTheme.colorScheme.transparent
+    val color = remember { Animatable(initialColor) }
+    val targetColor = MaterialTheme.colorScheme.backgroundSurface
+    LaunchedEffect(Unit) {
+        color.animateTo(targetColor, animationSpec = tween(1000))
+    }
+
+    Column(modifier = modifier.background(color.value)) {
+        Column(
+            modifier = Modifier
                 .weight(1f)
-                .background(MaterialTheme.colorScheme.transparent)
+                .fillMaxWidth()
         ) {
-            Column(
+            Box(
                 modifier = Modifier
-                    .fillMaxSize()
-            ) {
-                Box(
-                    modifier = Modifier
-                        .weight(1f)
-                        .fillMaxWidth()
-                        .background(MaterialTheme.colorScheme.transparent)
-                        .clickable(onClick = onExitClicked)
-                )
-                ChatSection(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .heightIn(min = 160.dp)
-                        .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
-                        .background(color = MaterialTheme.colorScheme.background)
-                        .padding(MaterialTheme.space.medium),
-                    chatHistory = chatHistory
-                )
-            }
+                    .weight(1f)
+                    .fillMaxWidth()
+                    .clickable(onClick = onExitClicked)
+            )
+            ChatSection(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(min = 160.dp)
+                    .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
+                    .background(color = MaterialTheme.colorScheme.background)
+                    .padding(MaterialTheme.space.medium),
+                chatHistory = chatHistory
+            )
         }
-        InputBar(askQuestionCallback)
+        InputBar(isGenerating, askQuestionCallback)
     }
 }
 
@@ -130,6 +135,7 @@ private fun ChatSection(modifier: Modifier, chatHistory: () -> List<Message>) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun InputBar(
+    isGenerating: Boolean,
     askQuestionCallback: (question: String) -> Unit
 ) {
     var textInput by rememberSaveable { mutableStateOf("") }
@@ -159,14 +165,15 @@ private fun InputBar(
                 },
                 colors = TextFieldDefaults.textFieldColors(
                     textColor = MaterialTheme.colorScheme.onPrimaryContainer,
-                    cursorColor = MaterialTheme.colorScheme.primary,
+                    cursorColor = MaterialTheme.colorScheme.onPrimaryContainer,
                     containerColor = MaterialTheme.colorScheme.transparent,
                     focusedIndicatorColor = MaterialTheme.colorScheme.transparent,
                     unfocusedIndicatorColor = MaterialTheme.colorScheme.transparent,
                     disabledIndicatorColor = MaterialTheme.colorScheme.transparent
                 )
             )
-            AnimatedVisibility(textInput.isNotEmpty(), enter = fadeIn(), exit = fadeOut()) {
+            val visible = textInput.isNotEmpty() && isGenerating.not()
+            AnimatedVisibility(visible, enter = fadeIn(), exit = fadeOut()) {
                 Icon(
                     imageVector = Icons.Rounded.Send,
                     modifier = Modifier
