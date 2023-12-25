@@ -133,52 +133,55 @@ private fun InputBar(
     askQuestionCallback: (question: String) -> Unit
 ) {
     var textInput by rememberSaveable { mutableStateOf("") }
-    Row(
-        modifier = Modifier
-            .background(
-                MaterialTheme.colorScheme.background
-            )
+    Box(
+        Modifier
+            .background(MaterialTheme.colorScheme.background)
             .padding(
                 horizontal = MaterialTheme.space.medium,
                 vertical = MaterialTheme.space.small
-            ),
-        verticalAlignment = Alignment.CenterVertically
+            )
     ) {
-        TextField(
-            modifier = Modifier.weight(1f),
-            placeholder = { Text(appStrings.askYourQuestion) },
-            value = textInput,
-            maxLines = 5,
-            textStyle = Typography.labelMedium,
-            onValueChange = {
-                textInput = it
-            },
-            colors = TextFieldDefaults.textFieldColors(
-                textColor = MaterialTheme.colorScheme.onBackground,
-                cursorColor = MaterialTheme.colorScheme.primary,
-                containerColor = MaterialTheme.colorScheme.transparent,
-                focusedIndicatorColor = MaterialTheme.colorScheme.transparent,
-                unfocusedIndicatorColor = MaterialTheme.colorScheme.transparent,
-                disabledIndicatorColor = MaterialTheme.colorScheme.transparent
+        Row(
+            modifier = Modifier
+                .clip(MaterialTheme.shapes.large)
+                .background(MaterialTheme.colorScheme.primaryContainer),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+
+            TextField(
+                modifier = Modifier.weight(1f),
+                placeholder = { Text(appStrings.askYourQuestion) },
+                value = textInput,
+                maxLines = 5,
+                textStyle = Typography.labelMedium,
+                onValueChange = {
+                    textInput = it
+                },
+                colors = TextFieldDefaults.textFieldColors(
+                    textColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                    cursorColor = MaterialTheme.colorScheme.primary,
+                    containerColor = MaterialTheme.colorScheme.transparent,
+                    focusedIndicatorColor = MaterialTheme.colorScheme.transparent,
+                    unfocusedIndicatorColor = MaterialTheme.colorScheme.transparent,
+                    disabledIndicatorColor = MaterialTheme.colorScheme.transparent
+                )
             )
-        )
-        AnimatedVisibility(textInput.isNotEmpty(), enter = fadeIn(), exit = fadeOut()) {
-            Icon(
-                imageVector = Icons.Rounded.Send,
-                modifier = Modifier
-                    .clip(CircleShape)
-                    .clickable {
-                        askQuestionCallback.invoke(textInput)
-                        textInput = ""
-                    }
-                    .padding(MaterialTheme.space.medium)
-                    .localeAware(),
-                contentDescription = appStrings.contentDescription.send,
-                tint = MaterialTheme.colorScheme.onBackground
-            )
+            AnimatedVisibility(textInput.isNotEmpty(), enter = fadeIn(), exit = fadeOut()) {
+                Icon(
+                    imageVector = Icons.Rounded.Send,
+                    modifier = Modifier
+                        .clip(CircleShape)
+                        .clickable {
+                            askQuestionCallback.invoke(textInput)
+                            textInput = ""
+                        }
+                        .padding(MaterialTheme.space.medium)
+                        .localeAware(),
+                    contentDescription = appStrings.contentDescription.send,
+                    tint = MaterialTheme.colorScheme.onBackground
+                )
+            }
         }
-        Spacer(
-            Modifier.padding(bottom = MaterialTheme.space.large)
-        )
+        Spacer(Modifier.padding(bottom = MaterialTheme.space.xLarge))
     }
 }
